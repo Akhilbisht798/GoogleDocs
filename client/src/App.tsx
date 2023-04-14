@@ -1,21 +1,18 @@
-import { useEffect } from "react";
-import TextArea from "./components/TextArea"
-import io from 'socket.io-client';
-const socket = io("http://localhost:3000/")
+import { useEffect, useState } from "react";
+import MySocket from "./components/Socket";
+import TextArea from "./components/TextArea";
 
 function App() {
+  useEffect(() => {
+    MySocket.instance.onConnect();
+    MySocket.instance.onDisconnect();
+  }, []);
 
-  socket.on("connection", () => {
-    console.log("Connected: " + socket.id)
-  })
- 
   return (
     <>
-      <div className=" text-3xl">
-        <TextArea/>
-      </div>
+      <TextArea />
     </>
- )
+  );
 }
 
-export default App
+export default App;
