@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MySocket from "./Socket";
 
 const TextArea = () => {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<String>("");
 
   const handler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const str = event.target.value;
@@ -11,17 +11,22 @@ const TextArea = () => {
   };
 
   useEffect(() => {
-    MySocket.instance.onContentChangeServer();
+    const handleChange = (a: String) => {
+      setContent(a);
+    };
+    MySocket.instance.onContentChangeServer(handleChange);
   }, []);
 
   return (
     <>
+      {console.log(content)}
       <textarea
-        defaultValue="Hello World"
         onChange={(e) => {
           handler(e);
         }}
-      ></textarea>
+      >
+        {content}
+      </textarea>
     </>
   );
 };

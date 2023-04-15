@@ -28,11 +28,13 @@ class MySocket {
     this.socket.emit("content-change-client", data);
   }
 
-  public onContentChangeServer() {
+  public onContentChangeServer(fn: (a: String) => void) {
     this.socket.on("content-change-server", (msg) => {
-      console.log("SERVER: " + msg);
+      fn(msg);
+      // console.log(msg);
     });
   }
+
   // public SendChangesToTextArea() {
   //   this.socket.emit("changes-from-client", () = {
   //
