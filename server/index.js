@@ -30,6 +30,12 @@ io.on("connection", (socket) => {
     socket.join(room);
     console.log(socket.id + " Joinned- " + room);
   });
+
+  //TODO: Implement changes from server to client
+  socket.on("content-change-client", (data) => {
+    socket.emit("content-change-server", data);
+    console.log(data);
+  });
 });
 
 server.listen(3000, () => {

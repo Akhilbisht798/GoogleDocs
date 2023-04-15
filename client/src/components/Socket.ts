@@ -24,6 +24,15 @@ class MySocket {
     this.socket.emit("join-room", room);
   }
 
+  public onContentChange(data: String) {
+    this.socket.emit("content-change-client", data);
+  }
+
+  public onContentChangeServer() {
+    this.socket.on("content-change-server", (msg) => {
+      console.log("SERVER: " + msg);
+    });
+  }
   // public SendChangesToTextArea() {
   //   this.socket.emit("changes-from-client", () = {
   //
