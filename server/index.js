@@ -21,19 +21,14 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("Connection: " + socket.id);
+  socket.join("room");
 
   socket.on("disconnect", () => {
     console.log(socket.id + " Disconnected");
   });
 
-  socket.on("join-room", (room) => {
-    socket.join(room);
-    console.log(socket.id + " Joinned- " + room);
-  });
-
   socket.on("content-change-client", (data) => {
-    socket.emit("content-change-server", data);
-    console.log(data);
+    io.to("room").emit("content-change-server", data);
   });
 });
 

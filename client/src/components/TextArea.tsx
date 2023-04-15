@@ -19,14 +19,12 @@ const TextArea = () => {
 
   return (
     <>
-      {console.log(content)}
       <textarea
+        value={content}
         onChange={(e) => {
           handler(e);
         }}
-      >
-        {content}
-      </textarea>
+      />
     </>
   );
 };

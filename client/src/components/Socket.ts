@@ -20,9 +20,9 @@ class MySocket {
     });
   }
 
-  public joinRoom(room: String) {
-    this.socket.emit("join-room", room);
-  }
+  // public joinRoom(room: String) {
+  //   this.socket.emit("join-room", room);
+  // }
 
   public onContentChange(data: String) {
     this.socket.emit("content-change-client", data);
