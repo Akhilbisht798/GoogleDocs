@@ -21,15 +21,22 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("Connection: " + socket.id);
-  socket.join("room");
 
   socket.on("disconnect", () => {
     console.log(socket.id + " Disconnected");
   });
 
-  socket.on("content-change-client", (data) => {
-    io.to("room").emit("content-change-server", data);
+  socket.on("join-room", (room) => {
+    socket.join(room);
+    console.log("Joined Room: " + room);
   });
+
+  //TODO: To make data a object with two item room and message.
+  socket.on("content-change-client", (data) => {
+    io.to(data.room).emit("content-change-server", data.msg);
+  });
+
+  socket.on("join-room", () => { });
 });
 
 server.listen(3000, () => {

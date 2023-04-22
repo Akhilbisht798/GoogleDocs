@@ -1,5 +1,10 @@
 import io, { Socket } from "socket.io-client";
 
+interface ContentFromClientToServer {
+  room: String | null;
+  msg: String | null;
+}
+
 class MySocket {
   public socket: Socket;
   public static instance: MySocket = new MySocket();
@@ -20,26 +25,19 @@ class MySocket {
     });
   }
 
-  // public joinRoom(room: String) {
-  //   this.socket.emit("join-room", room);
-  // }
+  public joinRoom(room: String | null) {
+    this.socket.emit("join-room", room);
+  }
 
-  public onContentChange(data: String) {
+  public onContentChangeFromClient(data: ContentFromClientToServer) {
     this.socket.emit("content-change-client", data);
   }
 
-  public onContentChangeServer(fn: (a: String) => void) {
+  public onContentChangeFromServer(fn: (a: String) => void) {
     this.socket.on("content-change-server", (msg) => {
       fn(msg);
-      // console.log(msg);
     });
   }
-
-  // public SendChangesToTextArea() {
-  //   this.socket.emit("changes-from-client", () = {
-  //
-  //   })
-  // }
 }
 
 export default MySocket;

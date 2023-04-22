@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import MySocket from "./Socket";
 
-const TextArea = () => {
+interface TextAreaProps {
+  room: String | null;
+}
+
+const TextArea: React.FC<TextAreaProps> = ({ room }) => {
   const [content, setContent] = useState<String>("");
 
   const handler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const str = event.target.value;
     setContent(str);
-    MySocket.instance.onContentChange(str);
+    MySocket.instance.onContentChangeFromClient({ room, msg: str });
   };
 
   useEffect(() => {
     const handleChange = (a: String) => {
       setContent(a);
     };
-    MySocket.instance.onContentChangeServer(handleChange);
+    MySocket.instance.onContentChangeFromServer(handleChange);
   }, []);
 
   return (
