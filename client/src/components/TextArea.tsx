@@ -22,14 +22,20 @@ const TextArea: React.FC<TextAreaProps> = ({ room }) => {
   }, []);
 
   return (
-    <>
+    <div className=" p-8 flex flex-col gap-4">
+      <h2 className=" text-6xl font-sans ">Write Here.</h2>
       <textarea
         value={content}
         onChange={(e) => {
           handler(e);
         }}
+        className="
+          max-w-full
+          border border-black
+          min-h-screen
+        "
       />
-    </>
+    </div>
   );
 };
 
